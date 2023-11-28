@@ -47,7 +47,8 @@ const AddTask = () => {
                         variant="outlined"
 
                     />
-                    {errors.title && <Alert sx={{width:"200px",marginTop:"10px"}}severity="error">title must above 5 letters</Alert>}
+                    {errors.title && <Alert sx={{width:"200px",marginTop:"10px"}}severity="error">
+                    title must have 5 letters</Alert>}
                 </Box>
 
 
