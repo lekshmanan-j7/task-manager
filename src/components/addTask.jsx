@@ -40,7 +40,7 @@ const AddTask = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Box>
                     <TextField
-                        {...register("title", { required: true, minLength: 5 })}
+                        {...register("title", { required: true, minLength: 1 })}
                         label="title"
                         id="outlined-error-helper-text"
                         type="text"
@@ -48,13 +48,13 @@ const AddTask = () => {
 
                     />
                     {errors.title && <Alert sx={{width:"200px",marginTop:"10px"}}severity="error">
-                    title must have 5 letters</Alert>}
+                    title canott be empty</Alert>}
                 </Box>
 
 
                 <Box sx={{ marginTop: "20px" }}>
                     <TextField
-                        {...register("description", { required: true, maxLength: 10 })}
+                        {...register("description")}
                         label="description"
                         id="outlined-multiline-static"
                         multiline
