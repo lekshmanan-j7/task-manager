@@ -10,6 +10,7 @@ const taskSlice = createSlice({
     reducers: {
         taskAdded: {
             reducer(state, action) {
+                console.log(action.payload)
                state.tasks.push(action.payload)
             },
             prepare(title, description) {

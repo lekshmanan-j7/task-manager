@@ -1,65 +1,79 @@
-import { useState } from "react";
+//import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { taskAdded } from "../slices/taskSlice";
-import { Box, Button, TextField } from "@mui/material";
-
+import { Alert, Box, Button, TextField } from "@mui/material";
+import { useForm } from "react-hook-form";
 
 
 const AddTask = () => {
     const dispatch = useDispatch()
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
 
-    const onTitleChanged = (e) => setTitle(e.target.value)
-    const onDescriptionChanged = (e) => setDescription(e.target.value)
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+
+
+
+    // const onTitleChanged = (e) => setTitle(e.target.value)
+    //  const onDescriptionChanged = (e) => setDescription(e.target.value)
 
     const onAddTaskClicked = () => {
-        if (title && description) {
-            dispatch(
-                taskAdded(title, description)
-            )
-            setTitle('')
-            setDescription('')
-        }
+
+        // if (title && description) {
+        //     dispatch(
+        //         taskAdded(title, description)
+        //     )
+        //     setTitle('')
+        //     setDescription('')
+        // }
+
+    }
+    const onSubmit = (data) => {
+        const { title, description } = data;
+        dispatch(
+            taskAdded(title, description)
+        )
+        reset()
     }
 
     return (
         <section>
             <h2>Task Manager</h2>
-            <Box>
-               <TextField
-               label="title"
-                    type="text"
-                    id="outlined-basic"
-                    variant="outlined"
-                    name="postTitle"
-                    value={title}
-                    onChange={onTitleChanged}
-                />
-            </Box>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <Box>
+                    <TextField
+                        {...register("title", { required: true, minLength: 5 })}
+                        label="title"
+                        id="outlined-error-helper-text"
+                        type="text"
+                        variant="outlined"
 
-            <Box sx={{ marginTop: "20px" }}>
-                <TextField
-                    label="description"
-                    id="outlined-multiline-static"
-                    multiline
-                    rows={5}
-                    defaultValue="Default Value"
-                    value={description}
-                    onChange={onDescriptionChanged}
-                /></Box>
+                    />
+                    {errors.title && <Alert sx={{width:"200px",marginTop:"10px"}}severity="error">title must above 5 letters</Alert>}
+                </Box>
 
-            <Button sx={{
-                color:"white",
-                backgroundColor:"#4169e1",
-                marginTop:"20px",
-                "&:hover": {
-                    backgroundColor: "#ADD8E6",
-                  },
-            }}
-                type="button"
-                onClick={onAddTaskClicked}
-            >Add Task</Button>
+
+                <Box sx={{ marginTop: "20px" }}>
+                    <TextField
+                        {...register("description", { required: true, maxLength: 10 })}
+                        label="description"
+                        id="outlined-multiline-static"
+                        multiline
+                        rows={5}
+
+                    />
+                </Box>
+
+                <Button sx={{
+                    color: "white",
+                    backgroundColor: "#4169e1",
+                    marginTop: "20px",
+                    "&:hover": {
+                        backgroundColor: "#ADD8E6",
+                    },
+                }}
+                    type='submit'
+                    onClick={onAddTaskClicked}
+                >Add Task</Button>
+            </form>
 
         </section>
     )
