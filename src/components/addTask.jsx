@@ -48,7 +48,7 @@ const AddTask = () => {
 
                     />
                     {errors.title && <Alert sx={{width:"200px",marginTop:"10px"}}severity="error">
-                    title canott be empty</Alert>}
+                    title cannot be empty</Alert>}
                 </Box>
 
 
